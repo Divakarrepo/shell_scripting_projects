@@ -1,6 +1,22 @@
 # listing-all-the-resources-in-an-AWS-account
 Script to automate the process of listing all the resources in an AWS account
 
+🧠 Project Goal
+
+The goal of this project is to automate the process of listing all running AWS resources (like EC2 instances, S3 buckets, Lambda functions, etc.) in your AWS account — using a shell script.
+
+Instead of manually checking each service in the AWS Management Console, this script helps you quickly see what resources you have in one command. it will help to manage unwanted billing to your AWS account.
+
+🚀 Tech Used
+
+* Shell Script (Bash) → For automation
+
+* AWS CLI → To interact with AWS services
+
+* IAM Role / User with proper permissions → To access AWS resources
+
+*********************************************************************************************************************************
+
 🧩 Step-by-Step Explanation
 
 1️⃣ Argument Check
@@ -14,15 +30,15 @@ if [ $# -ne 2 ]; then
     exit 1
 fi
 
-$# → **number of arguments passed to the script.**
+* $# → **number of arguments passed to the script.**
 
-It expects exactly 2 arguments
+* It expects exactly 2 arguments
 
-AWS Region (us-east-1, ap-south-1, etc.)
+* AWS Region (us-east-1, ap-south-1, etc.)
 
-AWS Service (ec2, s3, etc.)
+* AWS Service (ec2, s3, etc.)
 
-If not provided → shows usage help and exits.
+* If not provided → shows usage help and exits.
 
 2️⃣ Assigning Variables
 
@@ -30,9 +46,9 @@ aws_region=$1
 
 aws_service=$2
 
-$1 → first argument (AWS region)
+* $1 → first argument (AWS region)
 
-$2 → second argument (AWS service name)
+* $2 → second argument (AWS service name)
 
 3️⃣ Check if AWS CLI is Installed
 
@@ -43,13 +59,13 @@ if ! command -v aws &> /dev/null; then
     exit 1
     
 fi
-! → **not exists**
+* ! → **not exists**
 
-Uses **command -v aws** to check if AWS CLI exists in system PATH.
+* Uses **command -v aws** to check if AWS CLI exists in system PATH.
 
-if its available redirect the output in to empthy path ie. **/dev/null**
+* if its available redirect the output in to empthy path ie. **/dev/null**
 
-If not found → prints error and exits.
+* If not found → prints error and exits.
 
 4️⃣ Check if AWS CLI is Configured
 
@@ -61,9 +77,9 @@ if [ ! -d ~/.aws ]; then
     
 fi
 
-Checks if AWS config directory (~/.aws) exists.
+* Checks if AWS config directory (~/.aws) exists.
 
-If not → means aws configure hasn’t been run, so it exits.
+* If not → means aws configure hasn’t been run, so it exits.
 
 5️⃣ Service-Based AWS Resource Listing
 
@@ -82,9 +98,9 @@ case $aws_service in
         .
       esac
       
-case ... esac is like **switch** in other languages.
+* case ... esac is like **switch** in other languages.
 
-For each supported service (e.g., ec2, s3, rds...), it runs the corresponding AWS CLI command.
+* For each supported service (e.g., ec2, s3, rds...), it runs the corresponding AWS CLI command.
 
 6️⃣ Invalid Service Handler
 
@@ -96,4 +112,4 @@ For each supported service (e.g., ec2, s3, rds...), it runs the corresponding AW
           ;;
 (*) → otherthen everything
 
-If user enters a service not in the list → prints error and exits.
+* If user enters a service not in the list → prints error and exits.
